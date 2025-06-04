@@ -1,0 +1,170 @@
+{
+	"info": {
+		"_postman_id": "billetera-api-collection",
+		"name": "Billetera API",
+		"description": "Colección para probar los endpoints de la API de Billetera Virtual",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Registro de Cliente",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"documento\": \"123456789\",\n    \"nombres\": \"Juan Pérez\",\n    \"email\": \"juan@example.com\",\n    \"celular\": \"3001234567\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/billetera/registroCliente",
+					"host": ["{{base_url}}"],
+					"path": ["billetera", "registroCliente"]
+				},
+				"description": "Registra un nuevo cliente en el sistema"
+			}
+		},
+		{
+			"name": "Recargar Billetera",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"documento\": \"123456789\",\n    \"celular\": \"3001234567\",\n    \"valor\": 100000\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/billetera/recargarBilletera",
+					"host": ["{{base_url}}"],
+					"path": ["billetera", "recargarBilletera"]
+				},
+				"description": "Recarga saldo en la billetera del cliente"
+			}
+		},
+		{
+			"name": "Iniciar Pago",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"documento\": \"123456789\",\n    \"valor\": 50000\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/billetera/iniciarPago",
+					"host": ["{{base_url}}"],
+					"path": ["billetera", "iniciarPago"]
+				},
+				"description": "Inicia un proceso de pago y envía token por correo"
+			}
+		},
+		{
+			"name": "Confirmar Pago",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"idSesion\": \"{{idSesion}}\",\n    \"token\": \"123456\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/billetera/confirmarPago",
+					"host": ["{{base_url}}"],
+					"path": ["billetera", "confirmarPago"]
+				},
+				"description": "Confirma un pago usando el token recibido por correo"
+			}
+		},
+		{
+			"name": "Consultar Saldo",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"documento\": \"123456789\",\n    \"celular\": \"3001234567\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/billetera/consultarSaldo",
+					"host": ["{{base_url}}"],
+					"path": ["billetera", "consultarSaldo"]
+				},
+				"description": "Consulta el saldo actual de la billetera"
+			}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [""]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Verificar que la respuesta sea exitosa",
+					"pm.test(\"Status code is 200\", function () {",
+					"    pm.response.to.have.status(200);",
+					"});",
+					"",
+					"// Verificar el formato de la respuesta",
+					"pm.test(\"Response has correct format\", function () {",
+					"    var jsonData = pm.response.json();",
+					"    pm.expect(jsonData).to.have.property('success');",
+					"    pm.expect(jsonData).to.have.property('cod_error');",
+					"    pm.expect(jsonData).to.have.property('message_error');",
+					"    pm.expect(jsonData).to.have.property('data');",
+					"});",
+					"",
+					"// Si es una respuesta exitosa, verificar el código de error",
+					"pm.test(\"Success response has correct error code\", function () {",
+					"    var jsonData = pm.response.json();",
+					"    if (jsonData.success) {",
+					"        pm.expect(jsonData.cod_error).to.equal(\"00\");",
+					"    }",
+					"});"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:3001",
+			"type": "string"
+		},
+		{
+			"key": "idSesion",
+			"value": "",
+			"type": "string"
+		}
+	]
+} 

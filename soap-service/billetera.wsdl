@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="BilleteraService"
+             targetNamespace="http://localhost:3000/billetera?wsdl"
+             xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns="http://localhost:3000/billetera?wsdl"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <types>
+    <xsd:schema targetNamespace="http://localhost:3000/billetera?wsdl">
+      <xsd:element name="registroCliente">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="documento" type="xsd:string"/>
+            <xsd:element name="nombres" type="xsd:string"/>
+            <xsd:element name="email" type="xsd:string"/>
+            <xsd:element name="celular" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="registroClienteResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="success" type="xsd:boolean"/>
+            <xsd:element name="cod_error" type="xsd:string"/>
+            <xsd:element name="message_error" type="xsd:string" nillable="true"/>
+            <xsd:element name="data" type="xsd:anyType" nillable="true"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="recargarBilletera">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="documento" type="xsd:string"/>
+            <xsd:element name="celular" type="xsd:string"/>
+            <xsd:element name="valor" type="xsd:double"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="recargarBilleteraResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="success" type="xsd:boolean"/>
+            <xsd:element name="cod_error" type="xsd:string"/>
+            <xsd:element name="message_error" type="xsd:string" nillable="true"/>
+            <xsd:element name="data" type="xsd:anyType" nillable="true"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="iniciarPago">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="documento" type="xsd:string"/>
+            <xsd:element name="valor" type="xsd:double"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="iniciarPagoResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="success" type="xsd:boolean"/>
+            <xsd:element name="cod_error" type="xsd:string"/>
+            <xsd:element name="message_error" type="xsd:string" nillable="true"/>
+            <xsd:element name="data" type="xsd:anyType" nillable="true"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="confirmarPago">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="idSesion" type="xsd:string"/>
+            <xsd:element name="token" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="confirmarPagoResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="success" type="xsd:boolean"/>
+            <xsd:element name="cod_error" type="xsd:string"/>
+            <xsd:element name="message_error" type="xsd:string" nillable="true"/>
+            <xsd:element name="data" type="xsd:anyType" nillable="true"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="consultarSaldo">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="documento" type="xsd:string"/>
+            <xsd:element name="celular" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="consultarSaldoResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="success" type="xsd:boolean"/>
+            <xsd:element name="cod_error" type="xsd:string"/>
+            <xsd:element name="message_error" type="xsd:string" nillable="true"/>
+            <xsd:element name="data" type="xsd:anyType" nillable="true"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </types>
+
+  <message name="registroClienteRequest">
+    <part name="parameters" element="tns:registroCliente"/>
+  </message>
+  <message name="registroClienteResponse">
+    <part name="parameters" element="tns:registroClienteResponse"/>
+  </message>
+
+  <message name="recargarBilleteraRequest">
+    <part name="parameters" element="tns:recargarBilletera"/>
+  </message>
+  <message name="recargarBilleteraResponse">
+    <part name="parameters" element="tns:recargarBilleteraResponse"/>
+  </message>
+
+  <message name="iniciarPagoRequest">
+    <part name="parameters" element="tns:iniciarPago"/>
+  </message>
+  <message name="iniciarPagoResponse">
+    <part name="parameters" element="tns:iniciarPagoResponse"/>
+  </message>
+
+  <message name="confirmarPagoRequest">
+    <part name="parameters" element="tns:confirmarPago"/>
+  </message>
+  <message name="confirmarPagoResponse">
+    <part name="parameters" element="tns:confirmarPagoResponse"/>
+  </message>
+
+  <message name="consultarSaldoRequest">
+    <part name="parameters" element="tns:consultarSaldo"/>
+  </message>
+  <message name="consultarSaldoResponse">
+    <part name="parameters" element="tns:consultarSaldoResponse"/>
+  </message>
+
+  <portType name="BilleteraServiceSoap">
+    <operation name="registroCliente">
+      <input message="tns:registroClienteRequest"/>
+      <output message="tns:registroClienteResponse"/>
+    </operation>
+    <operation name="recargarBilletera">
+      <input message="tns:recargarBilleteraRequest"/>
+      <output message="tns:recargarBilleteraResponse"/>
+    </operation>
+    <operation name="iniciarPago">
+      <input message="tns:iniciarPagoRequest"/>
+      <output message="tns:iniciarPagoResponse"/>
+    </operation>
+    <operation name="confirmarPago">
+      <input message="tns:confirmarPagoRequest"/>
+      <output message="tns:confirmarPagoResponse"/>
+    </operation>
+    <operation name="consultarSaldo">
+      <input message="tns:consultarSaldoRequest"/>
+      <output message="tns:consultarSaldoResponse"/>
+    </operation>
+  </portType>
+
+  <binding name="BilleteraServiceSoap" type="tns:BilleteraServiceSoap">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="registroCliente">
+      <soap:operation soapAction="http://localhost:3000/billetera?wsdl/registroCliente"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="recargarBilletera">
+      <soap:operation soapAction="http://localhost:3000/billetera?wsdl/recargarBilletera"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="iniciarPago">
+      <soap:operation soapAction="http://localhost:3000/billetera?wsdl/iniciarPago"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="confirmarPago">
+      <soap:operation soapAction="http://localhost:3000/billetera?wsdl/confirmarPago"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="consultarSaldo">
+      <soap:operation soapAction="http://localhost:3000/billetera?wsdl/consultarSaldo"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+
+  <service name="BilleteraService">
+    <port name="BilleteraServiceSoap" binding="tns:BilleteraServiceSoap">
+      <soap:address location="http://localhost:3000/billetera?wsdl"/>
+    </port>
+  </service>
+</definitions> 
