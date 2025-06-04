@@ -1,7 +1,5 @@
 import { MongoClient } from 'mongodb';
 
-config();
-
 async function initDatabase() {
   const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/billetera';
   const client = new MongoClient(uri);
